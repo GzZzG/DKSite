@@ -1,0 +1,876 @@
+:root {
+    --primary-color: #4A90E2;
+    --secondary-color: #2ECC71;
+    --accent-color: #FF9F43;
+    --danger-color: #FF6B6B;
+    --background-color: #F8F9FA;
+    --sidebar-color: #FFFFFF;
+    --text-primary: #2D3436;
+    --text-secondary: #636E72;
+    --border-color: #E9ECEF;
+}
+
+/* 颜色主题变量 */
+[data-theme="light-orange"] {
+    --background-color: #FFE5B4;
+    --text-primary: #4A4A4A;
+    --text-secondary: #666666;
+}
+
+[data-theme="light-yellow"] {
+    --background-color: #FFF68F;
+    --text-primary: #4A4A4A;
+    --text-secondary: #666666;
+}
+
+[data-theme="light-blue"] {
+    --background-color: #E3F2FD;
+    --text-primary: #2C3E50;
+    --text-secondary: #34495E;
+}
+
+[data-theme="light-green"] {
+    --background-color: #E8F5E9;
+    --text-primary: #2C3E50;
+    --text-secondary: #34495E;
+}
+
+[data-theme="dark"] {
+    --background-color: #2D3436;
+    --sidebar-color: #353B48;
+    --text-primary: #FFFFFF;
+    --text-secondary: #B2BEC3;
+    --border-color: #4A5568;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-primary);
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 250px 1fr 300px;
+    min-height: 100vh;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+/* 左侧导航栏样式 */
+.sidebar {
+    background-color: var(--sidebar-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.logo h1 {
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+}
+
+.nav-links {
+    list-style: none;
+}
+
+.nav-links li {
+    padding: 0.8rem 1rem;
+    margin: 0.5rem 0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.nav-links li i {
+    font-size: 1.2rem;
+}
+
+.nav-links li:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.nav-links li.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* 主要内容区域样式 */
+.main-content {
+    background-color: var(--sidebar-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.date {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+}
+
+.add-task-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.add-task-btn:hover {
+    background-color: #357ABD;
+}
+
+/* 任务列表样式 */
+.task-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 8px;
+    margin-bottom: 0.8rem;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.task-item:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.task-item.completed {
+    opacity: 0.7;
+}
+
+.task-item.completed .task-title {
+    text-decoration: line-through;
+    color: var(--text-secondary);
+}
+
+.task-checkbox {
+    margin-right: 1rem;
+    margin-top: 0.3rem;
+}
+
+.task-content {
+    flex-grow: 1;
+    min-width: 0;
+}
+
+.task-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.task-description {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.8rem;
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.task-meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.task-priority {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.priority-high { color: var(--danger-color); }
+.priority-medium { color: var(--accent-color); }
+.priority-low { color: var(--secondary-color); }
+
+.task-actions {
+    display: flex;
+    gap: 0.5rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.task-item:hover .task-actions {
+    opacity: 1;
+}
+
+/* 右侧统计区域样式 */
+.statistics {
+    background-color: var(--sidebar-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.stat-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.stat-card h3 {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.progress-circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: conic-gradient(var(--primary-color) 0%, var(--border-color) 0%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    position: relative;
+}
+
+.progress-circle::before {
+    content: '';
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background-color: var(--sidebar-color);
+}
+
+.percentage {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--text-primary);
+    position: relative;
+    z-index: 1;
+}
+
+[data-theme="dark"] .percentage {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .progress-circle::before {
+    background-color: var(--sidebar-color);
+}
+
+/* 弹窗样式 */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 500px;
+    max-width: 90%;
+}
+
+.form-group {
+    margin-bottom: 1.2rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: 1.5rem;
+}
+
+.form-buttons button {
+    padding: 0.8rem 1.5rem;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.form-buttons button[type="submit"] {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.form-buttons .cancel {
+    background-color: var(--border-color);
+    color: var(--text-secondary);
+}
+
+/* 页脚样式 */
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    color: var(--text-secondary);
+    margin-top: 2rem;
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+}
+
+.social-links a {
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    text-decoration: none;
+}
+
+.social-links a:hover {
+    color: var(--primary-color);
+}
+
+/* 广告位样式 */
+.advertisement {
+    width: 100%;
+    padding: 1rem;
+    margin: 2rem 0;
+    display: flex;
+    justify-content: center;
+}
+
+.ad-container {
+    width: 100%;
+    max-width: 728px; /* 标准横幅广告尺寸 */
+    height: 90px;
+    background-color: var(--sidebar-color);
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.ad-label {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.ad-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ad-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.ad-placeholder i {
+    font-size: 2rem;
+}
+
+.ad-placeholder span {
+    font-size: 1rem;
+}
+
+/* 设置面板样式 */
+.settings-panel {
+    background-color: var(--sidebar-color);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-top: 1rem;
+}
+
+.settings-panel h3 {
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.settings-section {
+    margin-bottom: 2rem;
+}
+
+.settings-section h4 {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.color-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+}
+
+.color-option {
+    height: 60px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.color-option:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.color-option.active::after {
+    content: "✓";
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 1rem;
+}
+
+.color-option span {
+    font-size: 0.9rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.color-option:hover span {
+    opacity: 1;
+}
+
+/* 深色题适配 */
+[data-theme="dark"] {
+    --background-color: #2D3436;
+    --sidebar-color: #353B48;
+    --text-primary: #FFFFFF;
+    --text-secondary: #B2BEC3;
+    --border-color: #4A5568;
+}
+
+/* 页脚样式 */
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    color: var(--text-secondary);
+    margin-top: 2rem;
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+}
+
+.social-links a {
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    text-decoration: none;
+}
+
+.social-links a:hover {
+    color: var(--primary-color);
+}
+
+/* 广告位样式 */
+.advertisement {
+    width: 100%;
+    padding: 1rem;
+    margin: 2rem 0;
+    display: flex;
+    justify-content: center;
+}
+
+.ad-container {
+    width: 100%;
+    max-width: 728px; /* 标准横幅广告尺寸 */
+    height: 90px;
+    background-color: var(--sidebar-color);
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.ad-label {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.ad-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ad-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.ad-placeholder i {
+    font-size: 2rem;
+}
+
+.ad-placeholder span {
+    font-size: 1rem;
+}
+
+/* 总览面板样式 */
+.overview-panel {
+    background-color: var(--sidebar-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+}
+
+.overview-header {
+    margin-bottom: 2rem;
+}
+
+.date-selector {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.date-nav {
+    padding: 0.5rem 1rem;
+    border: none;
+    background: none;
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.date-nav:hover {
+    background-color: var(--background-color);
+    color: var(--primary-color);
+}
+
+.date-nav.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* 年度视图样式 */
+.months-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+}
+
+.month-card {
+    background-color: var(--background-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.month-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.month-card h4 {
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.month-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.completion-bar {
+    height: 6px;
+    background-color: var(--border-color);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.completion-progress {
+    height: 100%;
+    background-color: var(--primary-color);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+/* 月度视图样式 */
+.weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+}
+
+.day-cell {
+    aspect-ratio: 1;
+    background-color: var(--background-color);
+    border-radius: 8px;
+    padding: 0.5rem;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    min-height: 100px;
+}
+
+.day-cell:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.day-cell:hover .day-task-title {
+    color: white;
+}
+
+.day-date {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+}
+
+.day-tasks-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    font-size: 0.8rem;
+    overflow: hidden;
+}
+
+.day-task-title {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0.1rem 0;
+}
+
+.day-task-title.completed {
+    text-decoration: line-through;
+    opacity: 0.7;
+}
+
+.task-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.task-dot.priority-high { background-color: var(--danger-color); }
+.task-dot.priority-medium { background-color: var(--accent-color); }
+.task-dot.priority-low { background-color: var(--secondary-color); }
+
+.more-tasks {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-align: center;
+    margin-top: 0.2rem;
+}
+
+.day-cell.today {
+    border: 2px solid var(--primary-color);
+}
+
+.day-cell.has-tasks {
+    background-color: var(--sidebar-color);
+}
+
+/* 任务预览弹窗 */
+.task-preview {
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--sidebar-color);
+    border-radius: 8px;
+    padding: 0.8rem;
+    min-width: 250px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    display: none;
+}
+
+.day-cell:hover .task-preview {
+    display: block;
+}
+
+.task-preview-item {
+    padding: 0.8rem;
+    border-radius: 4px;
+    background-color: var(--background-color);
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+.task-preview-item:last-child {
+    margin-bottom: 0;
+}
+
+.task-preview-item.completed {
+    opacity: 0.7;
+}
+
+.task-preview-item.completed .preview-title {
+    text-decoration: line-through;
+    color: var(--text-secondary);
+}
+
+.preview-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.3rem;
+    font-weight: 500;
+}
+
+.preview-description {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin: 0.3rem 0;
+    line-height: 1.4;
+}
+
+.preview-due-date {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.preview-priority {
+    display: flex;
+    align-items: center;
+}
+
+.task-preview-item.more-tasks {
+    text-align: center;
+    color: var(--text-secondary);
+    background-color: transparent;
+    font-style: italic;
+    padding: 0.5rem;
+}
+
+/* 日视图样式 */
+.day-view {
+    background-color: var(--background-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.day-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.day-tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.no-tasks {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    background-color: var(--sidebar-color);
+    border-radius: 8px;
+    margin-top: 1rem;
+} 

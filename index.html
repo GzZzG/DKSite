@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow - 简单高效的任务管理工具</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- 使用更可靠的CDN -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/remixicon/3.5.0/remixicon.css" rel="stylesheet">
+    <!-- 添加错误处理 -->
+    <script>
+        window.onerror = function(msg, url, lineNo, columnNo, error) {
+            console.error('Error: ' + msg + '\nURL: ' + url + '\nLine: ' + lineNo + '\nColumn: ' + columnNo + '\nError object: ' + JSON.stringify(error));
+            return false;
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <!-- 左侧导航栏 -->
+        <nav class="sidebar">
+            <div class="logo">
+                <h1>TaskFlow</h1>
+            </div>
+            <ul class="nav-links">
+                <li class="active"><i class="ri-calendar-todo-fill"></i> 今日待办</li>
+                <li><i class="ri-dashboard-line"></i> 总览</li>
+                <li><i class="ri-calendar-line"></i> 本周待办</li>
+                <li><i class="ri-list-check"></i> 所有待办</li>
+                <li><i class="ri-bar-chart-box-line"></i> 周总结</li>
+                <li><i class="ri-line-chart-line"></i> 月总结</li>
+                <li><i class="ri-settings-4-line"></i> 设置</li>
+            </ul>
+        </nav>
+
+        <!-- 中间内容区域 -->
+        <main class="main-content">
+            <div class="header">
+                <h2 class="date">2024年1月1日</h2>
+                <button class="add-task-btn"><i class="ri-add-line"></i> 添加新任务</button>
+            </div>
+            
+            <!-- 总览面板 -->
+            <div class="overview-panel" id="overviewPanel" style="display: none;">
+                <div class="overview-header">
+                    <div class="date-selector">
+                        <button class="date-nav year-nav" id="yearSelector">2024年</button>
+                        <button class="date-nav month-nav" id="monthSelector">1月</button>
+                        <button class="date-nav day-nav" id="daySelector">1日</button>
+                    </div>
+                </div>
+                
+                <!-- 年度视图 -->
+                <div class="year-view" id="yearView">
+                    <div class="months-grid">
+                        <!-- 12个月的格子将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+                
+                <!-- 月度视图 -->
+                <div class="month-view" id="monthView" style="display: none;">
+                    <div class="weekdays">
+                        <span>日</span>
+                        <span>一</span>
+                        <span>二</span>
+                        <span>三</span>
+                        <span>四</span>
+                        <span>五</span>
+                        <span>六</span>
+                    </div>
+                    <div class="days-grid">
+                        <!-- 日历格子将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+                
+                <!-- 日视图 -->
+                <div class="day-view" id="dayView" style="display: none;">
+                    <!-- 具体某一天的任务列表将通过JavaScript动态生成 -->
+                </div>
+            </div>
+            
+            <div class="tasks-container">
+                <!-- 任务列表将通过JavaScript动态生成 -->
+            </div>
+
+            <!-- 设置面板 -->
+            <div class="settings-panel" id="settingsPanel" style="display: none;">
+                <h3>个性化设置</h3>
+                <div class="settings-section">
+                    <h4>背景颜色</h4>
+                    <div class="color-options">
+                        <div class="color-option" data-color="#F8F9FA" style="background-color: #F8F9FA; border: 1px solid #ddd;">
+                            <span>默认</span>
+                        </div>
+                        <div class="color-option" data-color="#FFE5B4" style="background-color: #FFE5B4">
+                            <span>橘黄色</span>
+                        </div>
+                        <div class="color-option" data-color="#FFF68F" style="background-color: #FFF68F">
+                            <span>柠檬黄</span>
+                        </div>
+                        <div class="color-option" data-color="#E3F2FD" style="background-color: #E3F2FD">
+                            <span>浅蓝色</span>
+                        </div>
+                        <div class="color-option" data-color="#E8F5E9" style="background-color: #E8F5E9">
+                            <span>浅绿色</span>
+                        </div>
+                        <div class="color-option" data-color="#2D3436" style="background-color: #2D3436; color: white;">
+                            <span>黑色</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 添加任务的弹窗 -->
+            <div class="modal" id="taskModal">
+                <div class="modal-content">
+                    <h3>新建任务</h3>
+                    <form id="taskForm">
+                        <div class="form-group">
+                            <label>任务标题</label>
+                            <input type="text" id="taskTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label>任务描述</label>
+                            <textarea id="taskDescription"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>优先级</label>
+                            <select id="taskPriority">
+                                <option value="high">高</option>
+                                <option value="medium">中</option>
+                                <option value="low">低</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>截止日期</label>
+                            <input type="datetime-local" id="taskDueDate">
+                        </div>
+                        <div class="form-buttons">
+                            <button type="submit">保存</button>
+                            <button type="button" class="cancel">取消</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+
+        <!-- 右侧统计区域 -->
+        <aside class="statistics">
+            <div class="stat-card">
+                <h3>今日完成率</h3>
+                <div class="progress-circle">
+                    <span class="percentage">0%</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <h3>本周完成率</h3>
+                <div class="weekly-stats">
+                    <!-- 柱状图将通过JavaScript生成 -->
+                </div>
+            </div>
+            <div class="stat-card">
+                <h3>本月趋势</h3>
+                <div class="monthly-stats">
+                    <!-- 折线图将通过JavaScript生成 -->
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- 广告位区域 -->
+    <div class="advertisement">
+        <div class="ad-container">
+            <div class="ad-label">广告</div>
+            <div class="ad-content">
+                <!-- 广告内容将在这里 -->
+                <div class="ad-placeholder">
+                    <i class="ri-advertisement-line"></i>
+                    <span>广告位招租</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 TaskFlow</p>
+        <div class="social-links">
+            <a href="https://space.bilibili.com/104871833?spm_id_from=333.337.0.0" target="_blank">
+                <i class="ri-bilibili-fill"></i>
+            </a>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html> 
